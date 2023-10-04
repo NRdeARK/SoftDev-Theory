@@ -2,32 +2,21 @@ import PropTypes from "prop-types";
 import React from "react";
 import "./ModalCSS/PayingModal.css";
 import { dbURL } from "../../../DB";
-import { useCookies } from "react-cookie";
+import useAuth from "../../../hooks/useAuth";
 
-interface Props {
+interface handleMoneyTransactionProps {
   iconClose: string;
+  handleClick : () => void
 }
 
-export const PayingModal = ({
-  iconClose = "icon-close.png",
-}: Props): JSX.Element => {
-  const [cookies] = useCookies(["user"]);
-  
-
-  const getUserDataFromCookie = () => {
-    const userDataString = cookies["user"];
-    console.log(userDataString);
-    return userDataString ? JSON.parse(userDataString) : null;
-  };
-
-  const userData = getUserDataFromCookie();//get user data from cookies
-  
+export const PayingModal = (props : handleMoneyTransactionProps) => {
+  const { auth } = useAuth()
 
   //handle when click on transaction money
   const handleMoneyTransaction = async () => { 
     try {
       const data = {
-        buyer_id: userData.userId,
+        buyer_id: auth.userId,
         // Concert_name: string,
         // reciever_id: UsersS,
         TicketNum: 1,
@@ -53,7 +42,7 @@ export const PayingModal = ({
     <div className="paying-modal">
       <div className="overlap">
         <div className="frame">
-          <img className="icon-close" alt="Icon close" src={iconClose} />
+          <img className="icon-close" alt="Icon close" src={props.iconClose} />
           <div className="div">
             <div className="frame-2">
               <div className="text-wrapper">ยอดเงินในบัญชี SafeTicket</div>
@@ -75,7 +64,11 @@ export const PayingModal = ({
               </div>
             </div>
             <button className="button">
-              <div className="text-wrapper-8" onClick={handleMoneyTransaction}>ถอนเงิน</div>
+              <div className="text-wrapper-8" 
+              onClick={()=>{
+                handleMoneyTransaction()
+                props.handleClick()
+              }}>ถอนเงิน</div>
             </button>
           </div>
         </div>

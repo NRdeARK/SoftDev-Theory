@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 
-function IsDecline() {
+interface IsGetTicketProps {
+  hireling : string
+  concertName : string 
+}
+
+function IsGetTicket( props : IsGetTicketProps) {
+  const [isAppear, setIsAppear] = useState(true);
   const containerStyle: React.CSSProperties = {
     display: "flex",
     width: "348px",
@@ -17,15 +23,17 @@ function IsDecline() {
     marginTop: "25px",
     marginBottom: "10px",
   };
-  return (
-    <div className="decline" style={containerStyle}>
+  return isAppear ?(
+    <div className="GotTicket" style={containerStyle}>
       <div
         style={{ marginRight: "auto", marginLeft: "20px", marginTop: "auto" }}
       >
         <Typography fontWeight={"bold"} fontSize={"24px"}>
           Notification
         </Typography>
-        <Typography>ได้ปฏิเสธคำร้องขอแล้ว</Typography>
+        <Typography>
+          {props.hireling} ได้กดบัตร {props.concertName} สำเร็จแล้วกรุณาเช็คที่ กระเป๋า
+        </Typography>
       </div>
       <div
         id="block"
@@ -44,6 +52,9 @@ function IsDecline() {
           }}
         >
           <IconButton
+            onClick={()=>{
+              setIsAppear(false)
+            }}
             style={{
               fontSize: "12px",
               backgroundColor: "#888",
@@ -58,7 +69,9 @@ function IsDecline() {
         </div>
       </div>
     </div>
-  );
+  ) : (
+    <></>
+  )
 }
 
-export default IsDecline;
+export default IsGetTicket;

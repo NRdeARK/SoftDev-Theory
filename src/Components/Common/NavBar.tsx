@@ -13,10 +13,12 @@ import { Link } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { useCookies } from "react-cookie";
 import { dbURL } from "../../DB";
+import useAuth from "../../hooks/useAuth";
 
 export let Username = "";
 const Navbar: React.FC = () => {
-  const [cookies, setCookie] = useCookies(["user"]);
+  const {setAuth} = useAuth();
+  const [, setCookie] = useCookies(["user"]);
 
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
   const [isLoggedInWorker, setIsLoggedInWorker] = useState(false);
@@ -88,6 +90,15 @@ const Navbar: React.FC = () => {
         setIsModalLoginOpen(false);
       }
       Username = username;
+      //using contexts
+      setAuth({
+        username: username,
+        role: role,
+        userId: user_id,
+        accessToken: access_token,
+      });
+      
+      //using cookie
       setUserDataCookie({
         username: username,
         role: role,
