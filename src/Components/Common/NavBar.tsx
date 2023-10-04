@@ -143,7 +143,7 @@ const Navbar = () => {
     try {
       const response: AxiosResponse<LoginResponse> =
         await axios.post<LoginResponse>(
-          dbURL + "auth/login",
+          hookupUrl+  dbURL + "auth/login",
           requestBody
         );
 
@@ -167,7 +167,7 @@ const Navbar = () => {
 
       try {
         const response: AxiosResponse<UserData> = await axios.post(
-          dbURL + "users/id",
+          hookupUrl+ dbURL + "users/id",
           req1
         );
 
@@ -221,7 +221,7 @@ const Navbar = () => {
     try {
       const response: AxiosResponse<BalanceRespons> =
         await axios.post<BalanceRespons>(
-          dbURL + "/Ticketpay/getTicket",
+          hookupUrl+ dbURL+"Ticketpay/getTicket",
           requestBody
         );
 
@@ -242,7 +242,7 @@ const Navbar = () => {
       };
       try {
         const response: AxiosResponse<UserData> = await axios.post(
-          dbURL + "users/id",
+          hookupUrl+  dbURL + "users/id",
           requestBody
         );
 
@@ -266,7 +266,7 @@ const Navbar = () => {
       try {
         const response: AxiosResponse<BalanceRespons> =
           await axios.post<BalanceRespons>(
-            dbURL + "Ticketpay/getTicket",
+            hookupUrl+  dbURL + "Ticketpay/getTicket",
             requestBody
           );
 
@@ -297,7 +297,7 @@ const Navbar = () => {
 
       try {
         const response = await axios.post(
-          dbURL + "concerts/Ticket_id",
+          hookupUrl+dbURL+ "concerts/Ticket_id",
           requestBody
         );
 
@@ -425,7 +425,7 @@ const Navbar = () => {
                 /* When logged in, display these icons */
                 <>
                   <IconButton style={iconStyle}>
-                    <Typography>{Username}</Typography>{" "}
+                  
                     {/* แสดง Username ที่ได้รับจากการเข้าสู่ระบบ */}
                   </IconButton>
 
@@ -629,10 +629,8 @@ const Navbar = () => {
             iconClose="Pics/icon_close.png"
             handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
             user_id={""}
-            Balance={0}
-            BalanceCheck={function (): Promise<void> {
-              throw new Error("Function not implemented.");
-            }}
+            Balance={showBalance}
+            BalanceCheck={BalanceCheck}
           />
         )}
       </>
