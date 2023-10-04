@@ -1,56 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import "../Components/CSS/ConcertInfoPage.css"
-import Navbar, { UserID } from '../Components/Common/NavBar';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom'; // เพิ่มการนำเข้าคำสั่ง useParams
-import { Employ, EventData, UserData } from './Interface';
-
-import { dbURL } from '../DB';
+import React, { useState, useEffect } from "react";
+import "../Components/CSS/ConcertInfoPage.css";
+import Navbar from "../Components/Common/NavBar";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom"; // เพิ่มการนำเข้าคำสั่ง useParams
+import { Employ, EventData, UserData } from "./Interface";
+import { dbURL } from "../DB";
+import { useCookies } from "react-cookie";
+// import { Username } from "../Components/Common/NavBar";
 import { Username } from '../Components/Common/NavBar';
 import axios, { AxiosResponse } from 'axios';
-
-
-
+import useAuth from "../hooks/useAuth";
 
 
 const ConcertInfoPage = () => {
-
-  
+  const { auth } = useAuth()
   const hookupUrl = "https://cors-anywhere.herokuapp.com/"
   const { concertId } = useParams();
+  // const [cookies] = useCookies(['user'])
 
-  console.log(concertId);
+  // console.log(concertId);
   const [concertData, setData] = useState<EventData[]>([]);
-
   const [recipients, setRecipients] = useState<UserData[]>([]);
 
   // สร้าง state สำหรับเก็บข้อมูลที่คุณต้องการส่งผ่าน POST request
-  //const [postData, setPostData] = useState<Employ>();
-
+  const [postData, setPostData] = useState({});
 
   useEffect(() => {
     // สร้างฟังก์ชัน async เพื่อรับข้อมูล concert ทั้งหมด
     const fetchConcert = async () => {
       try {
-        const response = await fetch(hookupUrl+dbURL + 'concerts');         // <--------------------------- เปลี่ยนใส่ API ของคิดดดดดดดดดดดดดดดดดดดดดดดดด
+        const response = await fetch(dbURL + "concerts"); // <--------------------------- เปลี่ยนใส่ API ของคิดดดดดดดดดดดดดดดดดดดดดดดดด
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const responseData = await response.json(); // แปลงข้อมูล json ให้อยู่ในรูปของ Object
         setData(responseData); // นำข้อมูลที่รับมาเก็บ
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-      catch (error) {
-        console.error('Error fetching data:', error);
-      }
-
-
     };
     fetchConcert(); // เรียกใช้ฟังก์ชัน fetchData เมื่อคอมโพเนนต์ถูกโหลด
 
-
     const fetchUser = async () => {
       try {
-        const response = await fetch(hookupUrl+dbURL + 'users');         // <--------------------------- เปลี่ยนใส่ API ของคิดดดดดดดดดดดดดดดดดดดดดดดดด
+        const response = await fetch(dbURL + 'users');         // <--------------------------- เปลี่ยนใส่ API ของคิดดดดดดดดดดดดดดดดดดดดดดดดด
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -97,7 +90,6 @@ const ConcertInfoPage = () => {
 
   };
 
-
   console.log(Username);
   const selectedConcert = concertData.find(concert => concert.id === concertId);
 
@@ -141,8 +133,6 @@ const ConcertInfoPage = () => {
           </div>
         </div>
 
-
-
         <div className="column">
           <div className="container" id="recipientSelectBox">
             <div className="container" id="recipientList">
@@ -162,7 +152,7 @@ const ConcertInfoPage = () => {
                   <div className="right-content">
                     <button type="button" onClick={() => {
                       if (conName) {
-                        handleHireButtonClick(recipient.user_id, conName , UserID , 1);                  
+                        handleHireButtonClick(recipient.user_id, conName , auth.userId , 1);                  
                       } else {
                         // Handle the case where conName is undefined
                         // You can show an error message or perform other actions here

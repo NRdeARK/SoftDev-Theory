@@ -12,12 +12,10 @@ const LoadingComponent: React.FC<LoadingComponentProps> = ({ isLoading }) => {
     <div style={{ display: isLoading ? 'block' : 'none' }}>
       <div className='ticketQueue'>
         <div className='modalLayout'>
-            
           <div className='waiting'>
             <img className='img-loading' src={LoadingSVG} alt='Loading SVG' />
             <h2>กรุณารอคิว</h2>
           </div>
-
         </div>
       </div>
     </div>

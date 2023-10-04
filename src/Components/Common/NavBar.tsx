@@ -14,10 +14,12 @@ import { BalanceModal } from "./PopupModal/BalanceModal";
 import { Link } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { UserData } from "../../Pages/Interface";
+import useAuth from "../../hooks/useAuth";
 
 const hookupUrl = "https://cors-anywhere.herokuapp.com/";
 
 // import { useCookies } from "react-cookie";
+
 
 export let Username = "";
 export let UserID = "";
@@ -25,6 +27,7 @@ export let UserID = "";
 const Navbar = () => {
   // เพิ่ม state สำหรับตรวจสอบสถานะการเข้าสู่ระบบ
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const {setAuth} = useAuth();
 
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
   const [isLoggedInWorker, setIsLoggedInWorker] = useState(false);
@@ -192,6 +195,15 @@ const Navbar = () => {
       }
 
       localStorage.setItem("Username", Username);
+      //using contexts
+      setAuth({
+        username: username,
+        role: role,
+        userId: user_id,
+        accessToken: access_token,
+      });
+      
+      //using cookie
       localStorage.setItem("Id", UserID);
 
       // You can also perform actions such as setting the user's token in state or redirecting the user to another page

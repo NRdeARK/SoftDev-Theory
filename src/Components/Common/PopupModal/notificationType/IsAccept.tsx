@@ -1,8 +1,16 @@
-import React from "react";
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
+import React, { useState } from "react";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import { PayingModal } from "../PayingModal";
 
-function GetRequest() {
+interface IsAcceptProps {
+  hirelingUsername: string;
+}
+
+function IsAccept(props: IsAcceptProps) {
+  const [isAccept, setIsAccept] = useState(false);
+  const [isAppear, setIsAppear] = useState(true);
+
   const containerStyle: React.CSSProperties = {
     display: "flex",
     width: "348px",
@@ -17,17 +25,26 @@ function GetRequest() {
     marginTop: "25px",
     marginBottom: "10px",
   };
-  return (
-    <div>
-      <div className="RequestBuyer" style={containerStyle}>
-        <div style={{ margin: "auto" }}>
+
+  const handleModalClick = () => {
+    console.log("isClick")
+    setIsAppear(false)
+  }
+
+  return isAppear ? (
+    isAccept ? (
+      <PayingModal iconClose="icon-close.png" handleClick={handleModalClick} />
+    ) : (
+      <div className="BuyerAccept" style={containerStyle}>
+        <div
+          style={{ marginRight: "auto", marginLeft: "20px", marginTop: "auto" }}
+        >
           <Typography fontWeight={"bold"} fontSize={"24px"}>
             Notification
           </Typography>
-          <Typography fontSize={"14px"}>
-            รายละเอียด : บัตร XXYYZZ วันที่ DD/MM/YYYY
+          <Typography>
+            {props.hirelingUsername} ได้ตอบรับแล้ว กรุณาชำระเงินค่ากดบัตร
           </Typography>
-          <Typography>Mrs.F ได้ส่งทำขอมาหาคุณ</Typography>
         </div>
         <div
           id="block"
@@ -46,6 +63,9 @@ function GetRequest() {
             }}
           >
             <IconButton
+              onClick={() => {
+                setIsAccept(true);
+              }}
               style={{
                 fontSize: "12px",
                 backgroundColor: "#FFA62B",
@@ -55,9 +75,12 @@ function GetRequest() {
                 color: "white",
               }}
             >
-              รับงาน
+              โอนเงิน
             </IconButton>
             <IconButton
+              onClick={() => {
+                setIsAppear(false);
+              }}
               style={{
                 fontSize: "12px",
                 backgroundColor: "#888",
@@ -72,8 +95,10 @@ function GetRequest() {
           </div>
         </div>
       </div>
-    </div>
+    )
+  ) : (
+    <></>
   );
 }
 
-export default GetRequest;
+export default IsAccept;

@@ -6,6 +6,7 @@ import GetTicketComponent from "../Components/LoadingComponent/GetTicketComponen
 import FailTicketComponent from "../Components/LoadingComponent/FailTicketComponent";
 import { useCookies } from "react-cookie";
 import { dbURL } from "../DB";
+import axios from "axios";
 
 const LoadingPageHireling = () => {
 
@@ -23,27 +24,31 @@ const LoadingPageHireling = () => {
   const userData = getUserDataFromCookie();
 
   useEffect(() => {
-    // สร้างฟังก์ชัน async เพื่อรับข้อมูลจาก API
-    const fetchHirlingBuyConcertTicket = async () => {
+//     hiring_buy : concerts/employbuy method Post
+// {
+//   buyer_id: UsersS
+//   Concert_name: string
+//   reciever_id: UsersS
+//   TicketNum:number
+// }
+    const fetchHirelingBuyConcertTicket = async () => {
       try {
-        const data = {
-            buyer_id: userData.userId,
-            // Concert_name: string,
-            // reciever_id: UsersS,
-            TicketNum:1
-        };
-        const response = await fetch(dbURL + "concerts/employbuy",{
-          method: "POST", // or 'PUT'
-          headers: {
-            "Content-Type": "application/json",
-          },body: JSON.stringify(data)}); 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const responseData = await response.json();
-        // setData(responseData); // นำข้อมูลที่รับมาเก็บ
-        // console.log(userData.username);
-        console.log(responseData);
+        const response = await axios.post(
+          dbURL + "concerts/employbuy",
+          JSON.stringify({ 
+            buyer_id : userData.userId,
+            Concert_name : "",
+            reciever_id : "",
+            TicketNum: 1
+           }),
+          {
+            headers: {
+              "Content-type": "application/json",
+            },
+          }
+        );
+        console.log(response)
+        setIsLoading(false)
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 
-function IsGetMoney() {
+interface IsGetMoneyProps {
+  hireling : string
+}
+
+function IsGetMoney(props : IsGetMoneyProps) {
+  const [isAppear, setIsAppear] = useState(true);
   const containerStyle: React.CSSProperties = {
     display: "flex",
     width: "348px",
@@ -17,7 +22,7 @@ function IsGetMoney() {
     marginTop: "25px",
     marginBottom: "10px",
   };
-  return (
+  return isAppear ? (
     <div className="DepositSuccess" style={containerStyle}>
       <div
         style={{ marginRight: "auto", marginLeft: "20px", marginTop: "auto" }}
@@ -25,7 +30,7 @@ function IsGetMoney() {
         <Typography fontWeight={"bold"} fontSize={"24px"}>
           Notification
         </Typography>
-        <Typography>Mrs.F ได้ทำการโอนเงินเรียบร้อยแล้ว</Typography>
+        <Typography>{props.hireling} ได้ทำการโอนเงินเรียบร้อยแล้ว</Typography>
       </div>
       <div
         id="block"
@@ -44,6 +49,9 @@ function IsGetMoney() {
           }}
         >
           <IconButton
+            onClick={()=>{
+              setIsAppear(false)
+            }}
             style={{
               fontSize: "12px",
               backgroundColor: "#888",
@@ -58,7 +66,9 @@ function IsGetMoney() {
         </div>
       </div>
     </div>
-  );
+  ) : (
+    <></>
+  )
 }
 
 export default IsGetMoney;

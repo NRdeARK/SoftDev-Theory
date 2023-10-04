@@ -12,7 +12,6 @@ const FailTicketComponent: React.FC<LoadingComponentProps> = ({ isLoading }) => 
     <div style={{ display: isLoading ? 'block' : 'none' }}>
       <div className='ticketQueue'>
         <div className='modalLayout'>
-
           <div className='failTicket'>
             <img src={SadeSVG} alt='Smile SVG' />
             <h2>เสียใจด้วย บัตรหมดแล้ว</h2>
@@ -23,9 +22,7 @@ const FailTicketComponent: React.FC<LoadingComponentProps> = ({ isLoading }) => 
                 </div>
               </Link>
             </button>
-          </div>
-          
-
+          </div> 
         </div>
       </div>
     </div>
