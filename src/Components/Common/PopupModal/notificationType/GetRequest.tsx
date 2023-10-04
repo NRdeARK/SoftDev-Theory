@@ -93,7 +93,7 @@ function GetRequest(props: GetRequestProps) {
   return isAppear ? (
     <div>
       <div className="RequestBuyer" style={containerStyle}>
-        <div style={{ margin: "auto" }}>
+        <div style={{ margin: "auto", marginLeft: "20px", marginTop: "auto" }}>
           <Typography fontWeight={"bold"} fontSize={"24px"}>
             Notification
           </Typography>
