@@ -14,7 +14,7 @@ import useAuth from "../hooks/useAuth";
 
 const ConcertInfoPage = () => {
   const { auth } = useAuth()
-  const hookupUrl = "https://cors-anywhere.herokuapp.com/"
+  const hookupUrl = ""
   const { concertId } = useParams();
   // const [cookies] = useCookies(['user'])
 
@@ -68,7 +68,7 @@ const ConcertInfoPage = () => {
     const postData = {
       buyer_id: _buyer_id,
       Concert_name: concertName,
-      reciever_id: _reciever_id,
+      reciever_id: auth.userId,
       TicketNum: TicketNumber,
     };
 

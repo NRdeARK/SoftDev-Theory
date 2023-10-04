@@ -7,21 +7,24 @@ import FailTicketComponent from "../Components/LoadingComponent/FailTicketCompon
 import { useCookies } from "react-cookie";
 import { dbURL } from "../DB";
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 const LoadingPageHireling = () => {
+  const { auth } = useAuth()
 
-  const [cookies] = useCookies(['user']);
+
+  // const [cookies] = useCookies(['user']);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isApprove, setIsApprove] = useState(false);
 
-  const getUserDataFromCookie = () => {
-    const userDataString = cookies['user'];
-    console.log(userDataString)
-    return userDataString ? JSON.parse(userDataString) : null;
-  };
+  // const getUserDataFromCookie = () => {
+  //   const userDataString = cookies['user'];
+  //   console.log(userDataString)
+  //   return userDataString ? JSON.parse(userDataString) : null;
+  // };
 
-  const userData = getUserDataFromCookie();
+  // const userData = getUserDataFromCookie();
 
   useEffect(() => {
 //     hiring_buy : concerts/employbuy method Post
@@ -36,7 +39,7 @@ const LoadingPageHireling = () => {
         const response = await axios.post(
           dbURL + "concerts/employbuy",
           JSON.stringify({ 
-            buyer_id : userData.userId,
+            buyer_id : auth.userId,
             Concert_name : "",
             reciever_id : "",
             TicketNum: 1

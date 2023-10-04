@@ -1,5 +1,3 @@
-// src/Components/Common/NavBar.tsx
-
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -16,7 +14,7 @@ import axios, { AxiosResponse } from "axios";
 import { UserData } from "../../Pages/Interface";
 import useAuth from "../../hooks/useAuth";
 
-const hookupUrl = "https://cors-anywhere.herokuapp.com/";
+const hookupUrl = "";
 
 // import { useCookies } from "react-cookie";
 
@@ -242,7 +240,7 @@ const Navbar = () => {
       };
       try {
         const response: AxiosResponse<UserData> = await axios.post(
-          dbURL + "users/id",
+          hookupUrl + dbURL + "users/id",
           requestBody
         );
 
@@ -266,7 +264,7 @@ const Navbar = () => {
       try {
         const response: AxiosResponse<BalanceRespons> =
           await axios.post<BalanceRespons>(
-            dbURL + "Ticketpay/getTicket",
+            hookupUrl + dbURL + "Ticketpay/getTicket",
             requestBody
           );
 
@@ -630,9 +628,7 @@ const Navbar = () => {
             handleModalClose={handleModalClose} // ตรวจสอบว่าส่งฟังก์ชันนี้ไปยัง BalanceModal หรือไม่
             user_id={""}
             Balance={0}
-            BalanceCheck={function (): Promise<void> {
-              throw new Error("Function not implemented.");
-            }}
+            BalanceCheck={BalanceCheck}
           />
         )}
       </>
